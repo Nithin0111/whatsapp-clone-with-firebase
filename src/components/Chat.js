@@ -1,13 +1,17 @@
 import { Avatar, IconButton } from "@material-ui/core";
 import {
   AttachFile,
+  Delete,
+  Edit,
+  Favorite,
   InsertEmoticon,
+  MessageSharp,
   Mic,
   MoreVert,
   SearchOutlined,
 } from "@material-ui/icons";
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { useParams, Redirect } from "react-router-dom";
 import "./componetsStyles/Chat.css";
 import db from "../config/firebase";
 import { useStateValue } from "../StateProvider";
@@ -31,6 +35,50 @@ const Chat = () => {
 
     setInput("");
   };
+
+  // const handleDelete = () => {
+  //   db.collection("rooms")
+  //     .doc(roomId)
+  //     .delete()
+  //     .then(() => {
+  //       console.log("Deleted successfully with room id: ", roomId);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error in deleting document", error.message);
+  //     });
+  // };
+
+  const handleUpdate = () => {
+    const newRoomName = prompt("Enter new room room name");
+    db.collection("rooms")
+      .doc(roomId)
+      .set({
+        name: newRoomName,
+      })
+      .then(() => {
+        console.log("Room name updated");
+      })
+      .catch((error) => {
+        return alert(error.message);
+      });
+  };
+
+  // const handleDelete = () => {
+  //   messages.map((message) =>
+  //     db
+  //       .collection("rooms")
+  //       .doc(roomId)
+  //       .collection("messages")
+  //       .doc(message.id)
+  //       .delete()
+  //       .then(() => {
+  //         console.log("Deleted");
+  //       })
+  //       .catch((error) => {
+  //         return alert(error.message);
+  //       })
+  //   );
+  // };
 
   useEffect(() => {
     if (roomId) {
@@ -66,11 +114,11 @@ const Chat = () => {
           </p>
         </div>
         <div className="chay_headerRight">
-          <IconButton>
-            <SearchOutlined />
+          <IconButton onClick={handleUpdate}>
+            <Edit />
           </IconButton>
           <IconButton>
-            <AttachFile />
+            <Delete />
           </IconButton>
           <IconButton>
             <MoreVert />
@@ -113,7 +161,6 @@ const Chat = () => {
       </div>
     </div>
   );
-  //FIXME:Paused at 1:57:21
 };
 
 export default Chat;

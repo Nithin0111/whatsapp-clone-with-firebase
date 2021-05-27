@@ -4,21 +4,30 @@ import { Button } from "@material-ui/core";
 import { auth, provider } from "../config/firebase";
 import { useStateValue } from "../StateProvider";
 import { actionTypes } from "../reducer";
+import firebase from "firebase";
 
 const Login = () => {
   const [{}, dispatch] = useStateValue();
 
   const signIn = () => {
-    auth
-      .signInWithPopup(provider)
-      .then((result) => {
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: result.user,
-        });
-      })
+    firebase
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() =>
+        auth
+          .signInWithPopup(provider)
+          .then((result) => {
+            dispatch({
+              type: actionTypes.SET_USER,
+              user: result.user,
+            });
+          })
+          .catch((error) => {
+            alert(error.message);
+          })
+      )
       .catch((error) => {
-        alert(error.message);
+        return alert(error.message);
       });
   };
 
