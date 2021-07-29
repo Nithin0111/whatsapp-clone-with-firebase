@@ -10,24 +10,16 @@ const Login = () => {
   const [{}, dispatch] = useStateValue();
 
   const signIn = () => {
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(() =>
-        auth
-          .signInWithPopup(provider)
-          .then((result) => {
-            dispatch({
-              type: actionTypes.SET_USER,
-              user: result.user,
-            });
-          })
-          .catch((error) => {
-            alert(error.message);
-          })
-      )
+    auth
+      .signInWithPopup(provider)
+      .then((result) => {
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: result.user,
+        });
+      })
       .catch((error) => {
-        return alert(error.message);
+        alert(error.message);
       });
   };
 
