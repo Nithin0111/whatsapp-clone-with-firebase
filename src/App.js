@@ -2,13 +2,13 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Chat from "./components/Chat";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useState } from "react";
 import Login from "./components/Login";
 import EmptyChat from "./components/EmptyChat";
 import { useStateValue } from "./StateProvider";
 import { useEffect } from "react";
 import { auth } from "./config/firebase";
 import { actionTypes } from "./reducer";
+import User from "./components/User";
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
@@ -39,9 +39,9 @@ function App() {
               <Route path="/" exact>
                 <Chat />
               </Route>
-              {/* <Route path="/profile" exact>
-
-              </Route> */}
+              <Route path="/profile" exact>
+                <User />
+              </Route>
               <Route path="/emptyChat" exact>
                 <EmptyChat />
               </Route>
