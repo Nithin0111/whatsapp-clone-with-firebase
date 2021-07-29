@@ -1,15 +1,34 @@
 import React, { useState, useEffect } from "react";
 import "./componetsStyles/Sidebar.css";
 import { Avatar, IconButton } from "@material-ui/core";
-import { Chat, DonutLarge, MoreVert, SearchOutlined } from "@material-ui/icons";
+import {
+  Chat,
+  DonutLarge,
+  MoreVert,
+  SearchOutlined,
+  ExitToAppOutlined,
+} from "@material-ui/icons";
 import SidebarChat from "./SidebarChat";
 
-import db from "../config/firebase";
+import db, { auth } from "../config/firebase";
 import { useStateValue } from "../StateProvider";
+import { useHistory } from "react-router-dom";
 
 const Sidebar = () => {
   const [rooms, setRooms] = useState([]);
   const [{ user }, dispatch] = useStateValue();
+  let history = useHistory();
+  const handleSignOut = async () => {
+    return await auth
+      .signOut()
+      .then(() => {
+        history.push("/");
+        console.log("Singout Successful");
+      })
+      .catch((err) => {
+        return alert(err.message);
+      });
+  };
 
   useEffect(() => {
     const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
@@ -37,8 +56,8 @@ const Sidebar = () => {
           <IconButton>
             <Chat />
           </IconButton>
-          <IconButton>
-            <MoreVert />
+          <IconButton onClick={handleSignOut}>
+            <ExitToAppOutlined title="SignOut" />
           </IconButton>
         </div>
       </div>
