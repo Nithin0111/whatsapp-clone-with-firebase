@@ -107,7 +107,7 @@ const Chat = () => {
             </p>
           </div>
           <div className="chay_headerRight">
-            <IconButton onClick={handleUpdate} title="Edit room name">
+            <IconButton onClick={handleUpdate} title="Edit room">
               <Edit />
             </IconButton>
             <IconButton onClick={handleDelete} title="Delete room">

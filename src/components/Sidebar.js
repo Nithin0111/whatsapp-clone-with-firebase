@@ -13,16 +13,22 @@ import SidebarChat from "./SidebarChat";
 import db, { auth } from "../config/firebase";
 import { useStateValue } from "../StateProvider";
 import { useHistory } from "react-router-dom";
+import { actionTypes } from "../reducer";
 
 const Sidebar = () => {
   const [rooms, setRooms] = useState([]);
   const [{ user }, dispatch] = useStateValue();
   let history = useHistory();
+
   const handleSignOut = async () => {
     return await auth
       .signOut()
       .then(() => {
-        history.push("/");
+        history.push("/signin");
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: null,
+        });
         console.log("Singout Successful");
       })
       .catch((err) => {
@@ -45,7 +51,7 @@ const Sidebar = () => {
     };
   }, []);
 
-  return (
+  return user ? (
     <div className="sidebar">
       <div className="sidebar_header">
         <Avatar src={user?.photoURL} />
@@ -74,6 +80,8 @@ const Sidebar = () => {
         ))}
       </div>
     </div>
+  ) : (
+    history.push("/")
   );
 };
 
