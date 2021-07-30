@@ -12,7 +12,7 @@ import SidebarChat from "./SidebarChat";
 
 import db, { auth } from "../config/firebase";
 import { useStateValue } from "../StateProvider";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { actionTypes } from "../reducer";
 
 const Sidebar = () => {
@@ -29,7 +29,7 @@ const Sidebar = () => {
           type: actionTypes.SET_USER,
           user: null,
         });
-        console.log("Singout Successful");
+        console.log("Signout Successful");
       })
       .catch((err) => {
         return alert(err.message);
@@ -54,7 +54,9 @@ const Sidebar = () => {
   return user ? (
     <div className="sidebar">
       <div className="sidebar_header">
-        <Avatar src={user?.photoURL} />
+        <Link to={`/profile`}>
+          <Avatar src={user?.photoURL} />
+        </Link>
         <div className="sidebar_headerRight">
           <IconButton>
             <DonutLarge />
