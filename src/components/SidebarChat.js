@@ -4,7 +4,7 @@ import "./componetsStyles/SidebarChat.css";
 import db from "../config/firebase";
 import { Link } from "react-router-dom";
 
-const SidebarChat = ({ id, name, addNewChat }) => {
+const SidebarChat = ({ id, name, addNewChat, open }) => {
   const [seed, setSeed] = useState("");
   const [messages, setMessages] = useState([]);
 
@@ -24,7 +24,6 @@ const SidebarChat = ({ id, name, addNewChat }) => {
     const roomName = prompt("Please enter a room name");
     console.log(roomName);
     if (roomName) {
-      //DONE AND I AM RIGHT:Do Some Stuff in Database as of now i don't know what they will be doing but i am assuming that they will store the name in the firebase database using write method and then show it in the sidebar.
       db.collection("rooms")
         .add({
           name: roomName,
@@ -53,9 +52,32 @@ const SidebarChat = ({ id, name, addNewChat }) => {
       </div>
     </Link>
   ) : (
-    <div onClick={createChat} className="sidebarChat">
+    <div className="sidebarChat">
       <div className="sidebarChat_info">
-        <h2>Add New Chat</h2>
+        <div className="sidebarChat_open">
+          {open ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+            >
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z" />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+            >
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11H7v2h4v4h2v-4h4v-2h-4V7h-2v4z" />
+            </svg>
+          )}
+          <h2> Add New Room</h2>
+        </div>
       </div>
     </div>
   );
