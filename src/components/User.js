@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { useStateValue } from "../StateProvider";
+import { useParams } from "react-router-dom";
 import "./componetsStyles/User.css";
-
+import { useEffect } from "react";
+import db from "../config/firebase";
 const User = () => {
   const [{ user }] = useStateValue();
   const [isCopied, setIsCopied] = useState(false);
@@ -20,7 +22,7 @@ const User = () => {
       }
     );
   };
-  console.log(user);
+
   return (
     <div className="userComponent">
       <div className="userInfo">
