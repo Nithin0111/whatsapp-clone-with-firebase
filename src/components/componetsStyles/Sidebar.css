@@ -90,3 +90,15 @@ select {
   border-radius: 10px;
   cursor: pointer;
 }
+
+.private {
+  font-weight: bold;
+  color: green;
+  text-align: center;
+}
+
+.privateMessage {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
